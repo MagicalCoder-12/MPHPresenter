@@ -1,0 +1,98 @@
+<Window x:Class="MPHPresenter.Views.ProjectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:MPHPresenter.ViewModels"
+        Title="Projection Window" 
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowState="Maximized"
+        Topmost="True"
+        
+        ResizeMode="NoResize"
+        SizeToContent="Manual"
+        WindowStartupLocation="Manual"
+        >
+    
+    <Window.DataContext>
+        <vm:ProjectionViewModel />
+    </Window.DataContext>
+    
+    <Grid Background="#000000">
+        <!-- Content Container -->
+        <Grid x:Name="ContentContainer" Margin="20">
+            <!-- Song / Bible Text -->
+            <TextBlock x:Name="TextContent" 
+                       Text="{Binding Content}" 
+                       TextWrapping="Wrap" 
+                       FontSize="48" 
+                       Foreground="White"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       Margin="20"
+                       Visibility="{Binding ContentType, Converter={StaticResource ContentTypeToVisibilityConverter}, ConverterParameter=song\,bible}">
+                
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0" Color="Black" BlurRadius="5" Opacity="0.5"/>
+                </TextBlock.Effect>
+            </TextBlock>
+            
+            <!-- Image -->
+            <Image x:Name="ImageContent" 
+                   Source="{Binding MediaSource}" 
+                   Stretch="Uniform" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Visibility="{Binding ContentType, Converter={StaticResource ContentTypeToVisibilityConverter}, ConverterParameter=image}">
+            </Image>
+            
+            <!-- Video -->
+            <MediaElement x:Name="VideoContent" 
+                          Source="{Binding MediaSource}" 
+                          IsMuted="False" 
+                          LoadedBehavior="Play" 
+                          UnloadedBehavior="Pause"
+                          Visibility="{Binding ContentType, Converter={StaticResource ContentTypeToVisibilityConverter}, ConverterParameter=video}">
+                <MediaElement.Triggers>
+                    <EventTrigger RoutedEvent="MediaElement.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <MediaTimeline Source="{Binding MediaSource}" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </MediaElement.Triggers>
+            </MediaElement>
+            
+            <!-- Audio -->
+            <MediaElement x:Name="AudioContent" 
+                          Source="{Binding MediaSource}" 
+                          IsMuted="False" 
+                          LoadedBehavior="Play" 
+                          UnloadedBehavior="Pause"
+                          Visibility="{Binding ContentType, Converter={StaticResource ContentTypeToVisibilityConverter}, ConverterParameter=audio}">
+            </MediaElement>
+        </Grid>
+        
+        <!-- Overlay controls (hidden by default, shown on mouse movement) -->
+        <Border Background="Transparent" MouseMove="Border_MouseMove" Cursor="Arrow">
+            <Grid>
+                <Border x:Name="ControlOverlay" Background="Black" Opacity="0.7" 
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                        Margin="20" Padding="10"
+                        Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Toggle Mode" Click="ToggleDisplayModeButton_Click" 
+                                Background="#3a7bd5" Foreground="White" 
+                                BorderBrush="#3a7bd5" Padding="8,4" Margin="0,0,10,0" 
+                               />
+                        <Button Content="Hide" Click="HideProjectionButton_Click" 
+                                Background="#ff4b55" Foreground="White" 
+                                BorderBrush="#ff4b55" Padding="8,4"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
