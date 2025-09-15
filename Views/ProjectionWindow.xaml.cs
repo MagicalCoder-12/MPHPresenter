@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using MPHPresenter.ViewModels;
 
 namespace MPHPresenter.Views
@@ -19,16 +20,16 @@ namespace MPHPresenter.Views
             // Set up timer to hide controls after inactivity
             _hideTimer = new System.Windows.Threading.DispatcherTimer();
             _hideTimer.Interval = TimeSpan.FromSeconds(3);
-            _hideTimer.Tick += HideControlsTimer_Tick;
+            _hideTimer.Tick += HideControlsTimer_Tick!;
             
             // Handle keyboard shortcuts
-            KeyDown += ProjectionWindow_KeyDown;
+            KeyDown += ProjectionWindow_KeyDown!;
             
             // Initialize with black background
             ContentContainer.Background = new SolidColorBrush(Colors.Black);
         }
 
-        private void ProjectionWindow_KeyDown(object sender, KeyEventArgs e)
+        private void ProjectionWindow_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -68,7 +69,7 @@ namespace MPHPresenter.Views
             }
         }
 
-        private void HideControlsTimer_Tick(object sender, EventArgs e)
+        private void HideControlsTimer_Tick(object? sender, EventArgs e)
         {
             ControlOverlay.Visibility = Visibility.Collapsed;
             _controlsVisible = false;
@@ -109,8 +110,12 @@ namespace MPHPresenter.Views
             _hideTimer = null;
         }
 
+    }
+
+    public static class MediaElementExtensions
+    {
         // Extension method to check if MediaElement is playing
-        private static bool IsPlaying(this MediaElement mediaElement)
+        public static bool IsPlaying(this MediaElement mediaElement)
         {
             return mediaElement.NaturalDuration.HasTimeSpan && 
                    mediaElement.Position.TotalSeconds > 0 &&

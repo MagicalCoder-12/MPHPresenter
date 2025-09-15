@@ -5,11 +5,11 @@ namespace MPHPresenter.Models
     public class BibleVerseModel : INotifyPropertyChanged
     {
         private int _id;
-        private string _book;
+        private string _book = string.Empty;
         private int _chapter;
         private int _verse;
-        private string _text;
-        private string _translation;
+        private string _text = string.Empty;
+        private string _translation = string.Empty;
 
         public int Id
         {
@@ -26,7 +26,7 @@ namespace MPHPresenter.Models
             get => _book;
             set
             {
-                _book = value;
+                _book = value ?? string.Empty;
                 OnPropertyChanged(nameof(Book));
             }
         }
@@ -56,7 +56,7 @@ namespace MPHPresenter.Models
             get => _text;
             set
             {
-                _text = value;
+                _text = value ?? string.Empty;
                 OnPropertyChanged(nameof(Text));
             }
         }
@@ -66,7 +66,7 @@ namespace MPHPresenter.Models
             get => _translation;
             set
             {
-                _translation = value;
+                _translation = value ?? string.Empty;
                 OnPropertyChanged(nameof(Translation));
             }
         }

@@ -1,8 +1,7 @@
 ﻿<Application x:Class="MPHPresenter.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mp="clr-namespace:MPHPresenter.Converters"
-             StartupUri="Views/MainWindow.xaml">
+             xmlns:mp="clr-namespace:MPHPresenter.Converters">
     <Application.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <mp:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>

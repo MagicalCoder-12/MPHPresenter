@@ -5,9 +5,9 @@ namespace MPHPresenter.Models
     public class SongModel : INotifyPropertyChanged
     {
         private int _id;
-        private string _title;
-        private string _lyrics;
-        private string _category;
+        private string _title = string.Empty;
+        private string _lyrics = string.Empty;
+        private string _category = string.Empty;
 
         public int Id
         {
@@ -24,7 +24,7 @@ namespace MPHPresenter.Models
             get => _title;
             set
             {
-                _title = value;
+                _title = value ?? string.Empty;
                 OnPropertyChanged(nameof(Title));
             }
         }
@@ -34,7 +34,7 @@ namespace MPHPresenter.Models
             get => _lyrics;
             set
             {
-                _lyrics = value;
+                _lyrics = value ?? string.Empty;
                 OnPropertyChanged(nameof(Lyrics));
             }
         }
@@ -44,7 +44,7 @@ namespace MPHPresenter.Models
             get => _category;
             set
             {
-                _category = value;
+                _category = value ?? string.Empty;
                 OnPropertyChanged(nameof(Category));
             }
         }

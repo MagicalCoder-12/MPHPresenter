@@ -1,6 +1,10 @@
 using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using MPHPresenter.Models;
 
 namespace MPHPresenter.Services
@@ -149,10 +153,10 @@ namespace MPHPresenter.Services
             {
                 songs.Add(new SongModel
                 {
-                    Id = reader.GetInt32("Id"),
-                    Title = reader.GetString("Title"),
-                    Lyrics = reader.GetString("Lyrics"),
-                    Category = reader.IsDBNull("Category") ? "" : reader.GetString("Category")
+                    Id = reader.GetInt32(0), // Use column index instead of name
+                    Title = reader.GetString(1),
+                    Lyrics = reader.GetString(2),
+                    Category = reader.IsDBNull(3) ? "" : reader.GetString(3)
                 });
             }
             
@@ -165,13 +169,13 @@ namespace MPHPresenter.Services
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO Songs (Title, Lyrics, Category) VALUES (@title, @lyrics, @category)";
+            command.CommandText = "INSERT INTO Songs (Title, Lyrics, Category) VALUES (@title, @lyrics, @category); SELECT last_insert_rowid();";
             command.Parameters.AddWithValue("@title", song.Title);
             command.Parameters.AddWithValue("@lyrics", song.Lyrics);
             command.Parameters.AddWithValue("@category", string.IsNullOrEmpty(song.Category) ? null : song.Category);
-            command.ExecuteNonQuery();
-
-            song.Id = (int)command.LastInsertRowId;
+            
+            var result = command.ExecuteScalar();
+            song.Id = Convert.ToInt32(result);
         }
 
         public void UpdateSong(SongModel song)
@@ -221,12 +225,12 @@ namespace MPHPresenter.Services
             {
                 verses.Add(new BibleVerseModel
                 {
-                    Id = reader.GetInt32("Id"),
-                    Book = reader.GetString("Book"),
-                    Chapter = reader.GetInt32("Chapter"),
-                    Verse = reader.GetInt32("Verse"),
-                    Text = reader.GetString("Text"),
-                    Translation = reader.GetString("Translation")
+                    Id = reader.GetInt32(0), // Use column index instead of name
+                    Book = reader.GetString(1),
+                    Chapter = reader.GetInt32(2),
+                    Verse = reader.GetInt32(3),
+                    Text = reader.GetString(4),
+                    Translation = reader.GetString(5)
                 });
             }
             
@@ -256,12 +260,12 @@ namespace MPHPresenter.Services
             {
                 verses.Add(new BibleVerseModel
                 {
-                    Id = reader.GetInt32("Id"),
-                    Book = reader.GetString("Book"),
-                    Chapter = reader.GetInt32("Chapter"),
-                    Verse = reader.GetInt32("Verse"),
-                    Text = reader.GetString("Text"),
-                    Translation = reader.GetString("Translation")
+                    Id = reader.GetInt32(0), // Use column index instead of name
+                    Book = reader.GetString(1),
+                    Chapter = reader.GetInt32(2),
+                    Verse = reader.GetInt32(3),
+                    Text = reader.GetString(4),
+                    Translation = reader.GetString(5)
                 });
             }
             
@@ -281,7 +285,7 @@ namespace MPHPresenter.Services
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                books.Add(reader.GetString("Book"));
+                books.Add(reader.GetString(0)); // Use column index instead of name
             }
             
             return books;
@@ -300,7 +304,7 @@ namespace MPHPresenter.Services
             using var reader = command.ExecuteReader();
             while (reader.Read())
             {
-                translations.Add(reader.GetString("Translation"));
+                translations.Add(reader.GetString(0)); // Use column index instead of name
             }
             
             return translations;
@@ -354,17 +358,17 @@ namespace MPHPresenter.Services
             if (!File.Exists(imagePath))
             {
                 // Create a simple PNG image (white background with text)
-                System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(800, 600);
-                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bitmap))
+                Bitmap bitmap = new Bitmap(800, 600);
+                using (Graphics g = Graphics.FromImage(bitmap))
                 {
-                    g.Clear(System.Drawing.Color.White);
-                    var font = new System.Drawing.Font("Arial", 24);
-                    var brush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
+                    g.Clear(Color.White);
+                    var font = new Font("Arial", 24);
+                    var brush = new SolidBrush(Color.Black);
                     var text = "Sample Image";
                     var size = g.MeasureString(text, font);
                     g.DrawString(text, font, brush, (800 - size.Width) / 2, (600 - size.Height) / 2);
                 }
-                bitmap.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+                bitmap.Save(imagePath, ImageFormat.Png);
             }
 
             // Create sample audio
@@ -393,7 +397,6 @@ namespace MPHPresenter.Services
                     0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d, 0x00, 0x00, 0x02, 0x00,
                     0x69, 0x73, 0x6f, 0x6d, 0x69, 0x73, 0x6f, 0x6d, 0x61, 0x76, 0x63, 0x31, 0x00, 0x00, 0x00, 0x08,
                     0x6d, 0x6f, 0x6f, 0x76, 0x00, 0x00, 0x00, 0x6c, 0x6d, 0x76, 0x68, 0x64, 0x00, 0x00, 0x00, 0x00,
-                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,

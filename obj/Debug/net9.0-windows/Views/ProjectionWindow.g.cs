@@ -100,7 +100,7 @@ namespace MPHPresenter.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/MPHPresenter;V1.0.0.0;component/views/projectionwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/MPHPresenter;component/views/projectionwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\ProjectionWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

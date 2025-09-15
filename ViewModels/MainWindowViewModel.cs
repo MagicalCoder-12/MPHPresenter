@@ -10,9 +10,9 @@ namespace MPHPresenter.ViewModels
         private readonly ProjectionService _projectionService;
         private bool _isDarkTheme = true;
 
-        public SongViewModel SongViewModel { get; }
-        public BibleViewModel BibleViewModel { get; }
-        public MediaViewModel MediaViewModel { get; }
+        public SongViewModel SongViewModel { get; set; }
+        public BibleViewModel BibleViewModel { get; set; }
+        public MediaViewModel MediaViewModel { get; set; }
 
         public RelayCommand StartProjectionCommand { get; }
         public RelayCommand StopProjectionCommand { get; }
@@ -38,10 +38,9 @@ namespace MPHPresenter.ViewModels
 
         public void SetProjectionService(ProjectionService projectionService)
         {
-            _projectionService = projectionService;
-            SongViewModel = new SongViewModel(new DatabaseService(), _projectionService);
-            BibleViewModel = new BibleViewModel(new DatabaseService(), _projectionService);
-            MediaViewModel = new MediaViewModel(new DatabaseService(), _projectionService);
+            SongViewModel = new SongViewModel(new DatabaseService(), projectionService);
+            BibleViewModel = new BibleViewModel(new DatabaseService(), projectionService);
+            MediaViewModel = new MediaViewModel(new DatabaseService(), projectionService);
         }
 
         private void ToggleTheme()
@@ -54,7 +53,7 @@ namespace MPHPresenter.ViewModels
 
         private void ExitApp()
         {
-            _projectionService.Dispose();
+            _projectionService?.Dispose();
             Application.Current.Shutdown();
         }
     }

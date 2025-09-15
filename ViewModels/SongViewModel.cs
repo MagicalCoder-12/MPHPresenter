@@ -145,20 +145,18 @@ namespace MPHPresenter.ViewModels
         }
     }
 
-    public partial class SongEditDialog : Window
+    public class SongEditDialog : Window
     {
         private readonly SongModel _song;
 
         public SongEditDialog(SongModel song)
         {
-            InitializeComponent();
             DataContext = this;
             _song = song;
             Title = "Edit Song";
-            Loaded += (s, e) => TitleTextBox.Focus();
         }
 
-        public string Title
+        public new string Title
         {
             get => _song.Title;
             set => _song.Title = value;

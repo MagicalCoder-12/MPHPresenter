@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using MPHPresenter.Models;
+using MPHPresenter.Views;
 
 namespace MPHPresenter.Services
 {
@@ -23,24 +24,14 @@ namespace MPHPresenter.Services
         {
             if (_isInitialized) return;
 
-            // Create projection window on the secondary display if available
-            var screens = System.Windows.Forms.Screen.AllScreens;
-            if (screens.Length > 1)
+            // Create projection window
+            _projectionWindow = new ProjectionWindow
             {
-                var secondaryScreen = screens[1];
-                _projectionWindow = new ProjectionWindow
-                {
-                    Left = secondaryScreen.Bounds.Left,
-                    Top = secondaryScreen.Bounds.Top,
-                    Width = secondaryScreen.Bounds.Width,
-                    Height = secondaryScreen.Bounds.Height
-                };
-            }
-            else
-            {
-                // Fallback: use main screen in fullscreen mode
-                _projectionWindow = new ProjectionWindow();
-            }
+                Left = SystemParameters.VirtualScreenLeft,
+                Top = SystemParameters.VirtualScreenTop,
+                Width = SystemParameters.VirtualScreenWidth,
+                Height = SystemParameters.VirtualScreenHeight
+            };
 
             _projectionWindow.Closed += (s, e) => 
             {

@@ -5,10 +5,10 @@ namespace MPHPresenter.Models
     public class MediaItemModel : INotifyPropertyChanged
     {
         private int _id;
-        private string _filePath;
-        private string _fileName;
-        private string _type; // "image", "video", "audio"
-        private string _thumbnailPath;
+        private string _filePath = string.Empty;
+        private string _fileName = string.Empty;
+        private string _type = string.Empty; // "image", "video", "audio"
+        private string _thumbnailPath = string.Empty;
 
         public int Id
         {
@@ -25,7 +25,7 @@ namespace MPHPresenter.Models
             get => _filePath;
             set
             {
-                _filePath = value;
+                _filePath = value ?? string.Empty;
                 OnPropertyChanged(nameof(FilePath));
             }
         }
@@ -35,7 +35,7 @@ namespace MPHPresenter.Models
             get => _fileName;
             set
             {
-                _fileName = value;
+                _fileName = value ?? string.Empty;
                 OnPropertyChanged(nameof(FileName));
             }
         }
@@ -45,7 +45,7 @@ namespace MPHPresenter.Models
             get => _type;
             set
             {
-                _type = value;
+                _type = value ?? string.Empty;
                 OnPropertyChanged(nameof(Type));
             }
         }
@@ -55,7 +55,7 @@ namespace MPHPresenter.Models
             get => _thumbnailPath;
             set
             {
-                _thumbnailPath = value;
+                _thumbnailPath = value ?? string.Empty;
                 OnPropertyChanged(nameof(ThumbnailPath));
             }
         }
