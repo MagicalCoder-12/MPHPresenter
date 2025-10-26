@@ -1,0 +1,6 @@
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\MPHPresenter.csproj.AssemblyReference.cache
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\MainWindow.g.cs
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\ProjectionWindow.g.cs
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\App.g.cs
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\MPHPresenter_MarkupCompile.cache
+D:\programs\Python\Chruch\App\MPHPresenter\obj\Debug\net8.0-windows\MPHPresenter_MarkupCompile.lref

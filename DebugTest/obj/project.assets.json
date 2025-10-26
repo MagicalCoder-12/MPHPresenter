@@ -60,11 +60,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\MPHPresenter.csproj",
-      "projectName": "MPHPresenter",
-      "projectPath": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\MPHPresenter.csproj",
+      "projectUniqueName": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\DebugTest\\DebugTest.csproj",
+      "projectName": "DebugTest",
+      "projectPath": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\DebugTest\\DebugTest.csproj",
       "packagesPath": "C:\\Users\\ajith\\.nuget\\packages\\",
-      "outputPath": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\obj\\",
+      "outputPath": "D:\\programs\\Python\\Chruch\\App\\MPHPresenter\\DebugTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ajith\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -116,9 +116,6 @@
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
-          },
-          "Microsoft.WindowsDesktop.App.WPF": {
-            "privateAssets": "none"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
